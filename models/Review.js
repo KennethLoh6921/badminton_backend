@@ -2,22 +2,26 @@ const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema(
     {
+        //a number from 1-5 (the star rating)
         r_star: {
             type: Number,
             required: [true, "Rating is required"],
             min: [1, "Rating must be at least 1"],
             max: [5, "Rating cannot exceed 5"],
         },
+        // the logged-in user who wrote it
         r_user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User", // Reference to User model
             required: [true, "User reference is required"],
         },
+        //the equipment being reviewed
         r_eq: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Catalogue", // Reference to Catalogue model
             required: [true, "Equipment reference is required"],
         },
+        //optional title and comment
         r_text: {
             type: String,
             trim: true,

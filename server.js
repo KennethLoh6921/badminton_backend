@@ -10,6 +10,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
+//CORS is a security feature that allows or blocks requests between different websites.
 app.use(express.json());
 
 // Database connection

@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 
 /**
  * Generate JWT Token for authentication
+ * tells what input a function needs.
  * @param {string} id - user ID
  * @returns {string} JWT token valid for 30 days
  */
@@ -19,10 +20,13 @@ const generateToken = (id) => {
 const registerUser = async (req, res) => {
     try {
         // Get user data from request body
-        const { user_id, email, name, password, role } = req.body;
+        const { email, name, password, role } = req.body;
 
-        // Check if user already exists with same email or user_id
-        const userExists = await User.findOne({ $or: [{ email }, { user_id }] });
+        // Auto-generate user_id from email prefix + random suffix
+        const user_id = email.split("@")[0] + "_" + Date.now().toString(36);
+
+        // Check if user already exists with same email
+        const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: "User already exists" });
         }

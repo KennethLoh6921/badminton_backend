@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+//place where apps save data
 
 const connectDB = async () => {
     try {
